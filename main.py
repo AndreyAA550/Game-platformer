@@ -31,9 +31,9 @@ while running:
         player.x -= speed
     if keys[pygame.K_RIGHT]:
         player.x += speed
-    if keys[pygame.K_SPACE] and player.y == ground.top - player.height:
+    if keys[pygame.K_SPACE] and player.y == ground.top - player.height and player.right > ground.left and player.left < ground.right:
         vel_y = -12
-    if keys[pygame.K_SPACE] and player.y == platform.top - player.height:
+    if keys[pygame.K_SPACE] and player.y == platform.top - player.height and player.right > platform.left and player.left < platform.right:
         vel_y = -12
 
     vel_y += gravity
