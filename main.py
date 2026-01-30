@@ -18,8 +18,8 @@ obstacle = pygame.Rect(420, 350, 100, 10)
 
 vel_y = 0
 gravity = 0.5
-speed = 5
-
+MIN_SPEED, MAX_SPEED = 5, 10
+speed = MIN_SPEED
 camera_x = 0
 CAMERA_MARGIN = WIDTH * 0.4  # зона покоя
 
@@ -38,7 +38,10 @@ while running:
         vel_y = -12
     if keys[pygame.K_SPACE] and player.y == platform.top - player.height and player.right > platform.left and player.left < platform.right:
         vel_y = -12
-
+    if keys[pygame.K_LCTRL] and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT]):
+        speed = min(speed + 1, MAX_SPEED)
+    else:
+        speed = max(speed - 1, MIN_SPEED)
     vel_y += gravity
     player.y += vel_y
 
