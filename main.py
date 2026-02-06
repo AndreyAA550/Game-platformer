@@ -30,6 +30,7 @@ vel_y = 0
 gravity = 0.5
 MIN_SPEED, MAX_SPEED = 5, 10
 speed = MIN_SPEED
+MIN_PLAYER_HEIGHT, MAX_PLAYER_HEIGHT = 40, 60
 camera_x = 0
 CAMERA_MARGIN = WIDTH * 0.4  # зона покоя
 
@@ -52,6 +53,11 @@ while running:
         speed = min(speed + 1, MAX_SPEED)
     else:
         speed = max(speed - 1, MIN_SPEED)
+    if keys[pygame.K_DOWN] and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT]):
+        player.height = MIN_PLAYER_HEIGHT
+    else:
+        player.height = MAX_PLAYER_HEIGHT
+
     vel_y += gravity
     player.y += vel_y
 
