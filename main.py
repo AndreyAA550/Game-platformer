@@ -11,6 +11,11 @@ def show_message(screen, text, duration=1000):
     pygame.time.delay(duration)  # задержка в миллисекундах
 
 pygame.init()
+# pygame.mixer.init()
+
+# pygame.mixer.music.load("background.mp3")
+# pygame.mixer.music.play(-1)
+# pygame.mixer.music.set_volume(0.5)
 
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -66,8 +71,10 @@ while running:
         moving = True
     if keys[pygame.K_SPACE] and player.y == ground.top - player.height and player.right > ground.left and player.left < ground.right:
         vel_y = -12
+        # jump_sound.play()
     if keys[pygame.K_SPACE] and player.y == platform.top - player.height and player.right > platform.left and player.left < platform.right:
         vel_y = -12
+        # jump_sound.play()
     if keys[pygame.K_LCTRL] and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT]):
         speed = min(speed + 1, MAX_SPEED)
     else:
@@ -96,11 +103,13 @@ while running:
         elif player.colliderect(platform.right, platform.top, 1, platform.height):
             player.x = platform.right
     if player.colliderect(obstacle):
+        # hit_sound.play()
         show_message(screen, "TOUCH!!!")
         player.x = START_X
         player.y = START_Y
         lives -= 1
         if lives == 0:
+            # hit_sound.play()
             show_message(screen, "GAME OVER!!!")
             running = False
 
