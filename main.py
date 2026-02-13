@@ -1,6 +1,6 @@
 import pygame
 
-def show_message(screen, text, duration=2000):
+def show_message(screen, text, duration=1000):
     font = pygame.font.SysFont(None, 72)
     message = font.render(text, True, (255, 255, 255))
     rect = message.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
@@ -21,12 +21,13 @@ LEVEL_WIDTH = 2000
 START_X = 100
 START_Y = 100
 
-player = pygame.Rect(START_X, START_Y, 40, 60)
 FRAME_WIDTH = 32
 FRAME_HEIGHT = 76
 FRAMES = 3
 
 player_image = pygame.image.load("person.png").convert_alpha()
+# jump_sound = pygame.mixer.Sound("jump.wav")
+# hit_sound  = pygame.mixer.Sound("hit.wav")
 
 player_frames = []
 for i in range(FRAMES):
