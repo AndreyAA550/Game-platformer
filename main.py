@@ -45,6 +45,7 @@ ground = pygame.Rect(0, 550, LEVEL_WIDTH, 50)
 obstacle = pygame.Rect(420, 350, 100, 10)
 
 current_frame = 0
+frame_image = player_frames[current_frame]
 animation_timer = 0
 ANIMATION_SPEED = 10
 vel_y = 0
@@ -65,9 +66,12 @@ while running:
     moving = False
     if keys[pygame.K_LEFT] and player.left > 0:
         player.x -= speed
+        frame_image = player_frames[current_frame]
+        frame_image = pygame.transform.flip(frame_image, True, False)
         moving = True
     if keys[pygame.K_RIGHT] and player.right < LEVEL_WIDTH:
         player.x += speed
+        frame_image = player_frames[current_frame]
         moving = True
     if keys[pygame.K_SPACE] and player.y == ground.top - player.height and player.right > ground.left and player.left < ground.right:
         vel_y = -12
@@ -132,9 +136,6 @@ while running:
         else:
             current_frame = 0
 
-    frame_image = player_frames[current_frame]
-    if keys[pygame.K_LEFT]:
-        frame_image = pygame.transform.flip(frame_image, True, False)
 
     screen.fill((30, 30, 30))
     pygame.draw.rect(screen, (200, 10, 20), obstacle.move(-camera_x, 0))
