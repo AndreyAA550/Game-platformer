@@ -22,15 +22,30 @@ START_X = 100
 START_Y = 100
 
 player = pygame.Rect(START_X, START_Y, 40, 60)
+FRAME_WIDTH = 32
+FRAME_HEIGHT = 76
+FRAMES = 3
+
+player_image = pygame.image.load("person.png").convert_alpha()
+
+player_frames = []
+for i in range(FRAMES):
+    frame = player_image.subsurface(pygame.Rect(i*FRAME_WIDTH, 0, FRAME_WIDTH, FRAME_HEIGHT))
+    player_frames.append(frame)
+
+player = pygame.Rect(START_X, START_Y, FRAME_WIDTH, FRAME_HEIGHT)
 platform = pygame.Rect(600, 450, 120, 10)
 ground = pygame.Rect(0, 550, LEVEL_WIDTH, 50)
 obstacle = pygame.Rect(420, 350, 100, 10)
 
+current_frame = 0
+animation_timer = 0
+ANIMATION_SPEED = 10
 vel_y = 0
 gravity = 0.5
 MIN_SPEED, MAX_SPEED = 5, 10
 speed = MIN_SPEED
-MIN_PLAYER_HEIGHT, MAX_PLAYER_HEIGHT = 40, 60
+MIN_PLAYER_HEIGHT, MAX_PLAYER_HEIGHT = 40, FRAME_HEIGHT
 camera_x = 0
 CAMERA_MARGIN = WIDTH * 0.4  # зона покоя
 
@@ -41,10 +56,13 @@ while running:
             running = False
 
     keys = pygame.key.get_pressed()
+    moving = False
     if keys[pygame.K_LEFT] and player.left > 0:
         player.x -= speed
+        moving = True
     if keys[pygame.K_RIGHT] and player.right < LEVEL_WIDTH:
         player.x += speed
+        moving = True
     if keys[pygame.K_SPACE] and player.y == ground.top - player.height and player.right > ground.left and player.left < ground.right:
         vel_y = -12
     if keys[pygame.K_SPACE] and player.y == platform.top - player.height and player.right > platform.left and player.left < platform.right:
@@ -96,11 +114,23 @@ while running:
     # ограничение камеры границами уровня
     camera_x = max(0, min(camera_x, LEVEL_WIDTH - WIDTH))
 
+    animation_timer += 1
+    if animation_timer >= ANIMATION_SPEED:
+        animation_timer = 0
+        if moving:
+            current_frame = (current_frame + 1) % FRAMES
+        else:
+            current_frame = 0
+
+    frame_image = player_frames[current_frame]
+    if keys[pygame.K_LEFT]:
+        frame_image = pygame.transform.flip(frame_image, True, False)
+
     screen.fill((30, 30, 30))
     pygame.draw.rect(screen, (200, 10, 20), obstacle.move(-camera_x, 0))
     pygame.draw.rect(screen, (200, 200, 200), ground.move(-camera_x, 0))
     pygame.draw.rect(screen, (100, 255, 100), platform.move(-camera_x, 0))
-    pygame.draw.rect(screen, (100, 180, 255), player.move(-camera_x, 0))
+    screen.blit(frame_image, (player.x - camera_x, player.y))
 
     pygame.display.flip()
     clock.tick(60)
