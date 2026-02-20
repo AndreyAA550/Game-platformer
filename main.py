@@ -102,12 +102,13 @@ while running:
         elif player.colliderect(platform.right, platform.top, 1, platform.height):
             player.x = platform.right
     if player.colliderect(obstacle):
+        lives -= 1
         # hit_sound.play()
-        show_message(screen, "TOUCH!!!")
         player.x = START_X
         player.y = START_Y
-        lives -= 1
-        if lives == 0:
+        if lives != 0:
+            show_message(screen, "TOUCH!!!")
+        else:
             # hit_sound.play()
             show_message(screen, "GAME OVER!!!")
             running = False
