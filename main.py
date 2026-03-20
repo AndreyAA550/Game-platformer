@@ -22,7 +22,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 lives = 3
 
-LEVEL_WIDTH = 2000
+LEVEL_WIDTH = 3000
 START_X = 100
 START_Y = 100
 
@@ -42,7 +42,12 @@ for i in range(FRAMES):
 player = pygame.Rect(START_X, START_Y, FRAME_WIDTH, FRAME_HEIGHT)
 platforms = [
     pygame.Rect(600, 450, 120, 10),
-    pygame.Rect(800, 450, 120, 10),
+    pygame.Rect(850, 350, 120, 10),
+    pygame.Rect(1010, 240, 120, 10),
+    pygame.Rect(1280, 300, 120, 10),
+    pygame.Rect(1480, 200, 120, 10),
+    pygame.Rect(1740, 300, 120, 10),
+    pygame.Rect(1940, 360, 120, 10),
 ]
 ground = pygame.Rect(0, 550, LEVEL_WIDTH, 50)
 obstacles = [
