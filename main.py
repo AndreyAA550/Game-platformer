@@ -45,7 +45,10 @@ platforms = [
     pygame.Rect(800, 450, 120, 10),
 ]
 ground = pygame.Rect(0, 550, LEVEL_WIDTH, 50)
-obstacle = pygame.Rect(420, 350, 100, 10)
+obstacles = [
+    pygame.Rect(420, 350, 100, 10),
+    pygame.Rect(1580, 150, 100, 10)
+]
 
 current_frame = 0
 frame_image = player_frames[current_frame]
@@ -106,17 +109,18 @@ while running:
                 player.x = platform.left - player.width
             elif player.colliderect(platform.right, platform.top, 1, platform.height):
                 player.x = platform.right
-    if player.colliderect(obstacle):
-        lives -= 1
-        # hit_sound.play()
-        player.x = START_X
-        player.y = START_Y
-        if lives != 0:
-            show_message(screen, "TOUCH!!!")
-        else:
+    for obstacle in obstacles:
+        if player.colliderect(obstacle):
+            lives -= 1
             # hit_sound.play()
-            show_message(screen, "GAME OVER!!!")
-            running = False
+            player.x = START_X
+            player.y = START_Y
+            if lives != 0:
+                show_message(screen, "TOUCH!!!")
+            else:
+                # hit_sound.play()
+                show_message(screen, "GAME OVER!!!")
+                running = False
 
     left_border = camera_x + CAMERA_MARGIN
     right_border = camera_x + WIDTH - CAMERA_MARGIN
@@ -139,7 +143,8 @@ while running:
 
 
     screen.fill((30, 30, 30))
-    pygame.draw.rect(screen, (200, 10, 20), obstacle.move(-camera_x, 0))
+    for obstacle in obstacles:
+        pygame.draw.rect(screen, (200, 10, 20), obstacle.move(-camera_x, 0))
     pygame.draw.rect(screen, (200, 200, 200), ground.move(-camera_x, 0))
     for platform in platforms:
         pygame.draw.rect(screen, (100, 255, 100), platform.move(-camera_x, 0))
