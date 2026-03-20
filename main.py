@@ -49,6 +49,8 @@ platforms = [
     pygame.Rect(1740, 300, 120, 10),
     pygame.Rect(1940, 360, 120, 10),
 ]
+finish_platform = pygame.Rect(2860, 450, 140, 10)
+
 ground = pygame.Rect(0, 550, LEVEL_WIDTH, 50)
 obstacles = [
     pygame.Rect(420, 350, 100, 10),
@@ -102,6 +104,15 @@ while running:
         player.y = ground.top - player.height
         vel_y = 0
 
+    if player.colliderect(finish_platform):
+        player.y = finish_platform.top - player.height
+        vel_y = 0
+        # win_sound.play()
+        show_message(screen,"WIN!", 1700)
+        running = False
+
+
+
     for platform in platforms:
         if player.colliderect(platform):
             if player.colliderect(platform.left + 5, platform.top, platform.width - 10, 1):
@@ -151,6 +162,7 @@ while running:
     for obstacle in obstacles:
         pygame.draw.rect(screen, (200, 10, 20), obstacle.move(-camera_x, 0))
     pygame.draw.rect(screen, (200, 200, 200), ground.move(-camera_x, 0))
+    pygame.draw.rect(screen, (159, 10, 100), finish_platform.move(-camera_x, 0))
     for platform in platforms:
         pygame.draw.rect(screen, (100, 255, 100), platform.move(-camera_x, 0))
     screen.blit(frame_image, (player.x - camera_x, player.y))
