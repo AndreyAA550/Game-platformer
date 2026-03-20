@@ -30,9 +30,8 @@ FRAME_WIDTH = 32
 FRAME_HEIGHT = 76
 FRAMES = 3
 
-player_image = pygame.image.load("person.png").convert_alpha()
-# jump_sound = pygame.mixer.Sound("jump.wav")
-# hit_sound  = pygame.mixer.Sound("hit.wav")
+player_image = pygame.image.load("player.png").convert_alpha()
+player_image = pygame.transform.scale_by(player_image, SCALE)
 jump_sound = pygame.mixer.Sound("jump.wav")
 hit_sound  = pygame.mixer.Sound("hit.wav")
 win_sound = pygame.mixer.Sound("win.wav")
