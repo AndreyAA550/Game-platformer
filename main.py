@@ -22,7 +22,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 lives = 3
 
-LEVEL_WIDTH = 3000
+LEVEL_WIDTH = 4000
 START_X = 100
 START_Y = 100
 
@@ -52,13 +52,23 @@ platforms = [
     pygame.Rect(1480, 200, 120, 10),
     pygame.Rect(1740, 300, 120, 10),
     pygame.Rect(1940, 360, 120, 10),
+    pygame.Rect(2350 , 580, 150, 10),
+    pygame.Rect(2630 , 470, 120, 10),
+    pygame.Rect(2860, 350, 120, 10),
+    pygame.Rect(3100, 280, 120, 10),
+    pygame.Rect(3400, 200, 120, 10),
+    pygame.Rect(3650, 350, 120, 10),
 ]
-finish_platform = pygame.Rect(2860, 450, 140, 10)
+finish_platform = pygame.Rect(3860, 450, 140, 10)
 
-ground = pygame.Rect(0, 550, LEVEL_WIDTH, 50)
+ground = pygame.Rect(0, 550, 600, 50)
 obstacles = [
     pygame.Rect(420, 350, 100, 10),
-    pygame.Rect(1580, 150, 100, 10)
+    pygame.Rect(1600, 150, 100, 10),
+    pygame.Rect(600, 700, 3400, 10),
+    pygame.Rect(2270, 350, 10, 120),
+    pygame.Rect(3820, 270, 10, 120),
+    pygame.Rect(600, 700, 3400, 10),
 ]
 
 current_frame = 0
@@ -136,7 +146,7 @@ while running:
             player.x = START_X
             player.y = START_Y
             if lives != 0:
-                show_message(screen, "TOUCH!!!")
+                show_message(screen, "CRASH!!!")
             else:
                 hit_sound.play()
                 show_message(screen, "GAME OVER!!!")
