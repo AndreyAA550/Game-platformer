@@ -25,6 +25,11 @@ class Platform:
         return True
 
 
+class FinishPlatform(Platform):
+    def draw(self, screen, camera_x):
+        draw.rect(screen, (159, 10, 100), self.rect.move(-camera_x, 0))
+
+
 class DisappearingPlatform(Platform):
     def __init__(self, left, top, width, height, delay=2.0, hidden_time=2.0):
         super().__init__(left, top, width, height)

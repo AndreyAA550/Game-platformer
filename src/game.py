@@ -96,16 +96,8 @@ class Game:
             self.screen.blit(lives_text, (10, 10))
             self.screen.blit(time_left_text, (10, 45))
 
-        for obstacle in self.level.obstacles:
-            pygame.draw.rect(self.screen, (200, 10, 20), obstacle.move(-self.camera_x, 0))
-        for ground in self.level.ground:
-            ground.draw(self.screen, self.camera_x)
-        pygame.draw.rect(self.screen, (159, 10, 100), self.level.finish_platform.rect.move(-self.camera_x, 0))
-        for platform in self.level.platforms:
-            platform.draw(self.screen, self.camera_x)
-        self.screen.blit(self.player.get_frame(), (self.player.rect.x - self.camera_x, self.player.rect.y))
-        self.screen.blit(self.flying_enemy.get_frame(),
-                         (self.flying_enemy.rect.x - self.camera_x, self.flying_enemy.rect.y))
+        for world_obj in self.level.obstacles + self.level.ground + self.level.platforms + [self.level.finish_platform, self.player, self.flying_enemy]:
+            world_obj.draw(self.screen, self.camera_x)
         pygame.display.flip()
 
     def show_message(self, text, duration=1000):
@@ -154,12 +146,15 @@ class Game:
             self.app.mode = "menu"
         self.restart_level()
 
+    def player_win(self):
+        self.win_sound.play()
+        self.show_message("WIN!", 1700)
+        self.current_level = (self.current_level + 1) % len(self.levels)
+        self.restart_level()
+
     def resolve_player_finish_collisions(self):
         if self.player.rect.colliderect(self.level.finish_platform.rect):
-            self.win_sound.play()
-            self.show_message("WIN!", 1700)
-            self.current_level = (self.current_level + 1) % len(self.levels)
-            self.restart_level()
+            self.player_win()
 
     def handle_events(self, events):
         for event in events:

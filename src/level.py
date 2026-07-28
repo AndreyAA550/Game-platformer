@@ -1,5 +1,5 @@
-from pygame import Rect
-from src.game_platform import Platform, DisappearingPlatform
+from hazards import Obstacle
+from src.platforms import Platform, DisappearingPlatform, FinishPlatform
 
 
 class Level:
@@ -52,7 +52,7 @@ levels = [
             Platform(7090, 270, 120, 10),
             Platform(7490, 400, 120, 10),
         ],
-        finish_platform = Platform(7860, 450, 140, 10),
+        finish_platform = FinishPlatform(7860, 450, 140, 10),
         ground = [
             Platform(0, 550, 600, 50),
             Platform(-50, 0, 55, 600),
@@ -60,14 +60,14 @@ levels = [
             Platform(20, -30, 13000, 10 ),
         ],
         obstacles = [
-            Rect(420, 350, 100, 10),
-            Rect(1600, 150, 100, 10),
-            Rect(600, 700, 12400, 10),
-            Rect(2270, 350, 10, 120),
-            Rect(3820, 270, 10, 120),
-            Rect(600, 700, 3400, 10),
-            Rect(5480, 250, 10, 100),
-            Rect(5980, 130, 10, 100),
+            Obstacle(420, 350, 100, 10),
+            Obstacle(1600, 150, 100, 10),
+            Obstacle(600, 700, 12400, 10),
+            Obstacle(2270, 350, 10, 120),
+            Obstacle(3820, 270, 10, 120),
+            Obstacle(600, 700, 3400, 10),
+            Obstacle(5480, 250, 10, 100),
+            Obstacle(5980, 130, 10, 100),
         ]
     ),
     Level(
@@ -89,7 +89,7 @@ levels = [
             Platform(2400, 500, 120, 10),
 
         ],
-        finish_platform = Platform(12860, 450, 140, 10),
+        finish_platform = FinishPlatform(12860, 450, 140, 10),
         ground = [
             Platform(0, 550, 600, 50),
             Platform(-50, 0, 55, 600),
@@ -97,11 +97,11 @@ levels = [
             Platform(0, -30, 13000, 10 ),
         ],
         obstacles = [
-            Rect(420, 350, 100, 10),
-            Rect(1600, 130, 100, 10),
-            Rect(0, 700, 2000, 10),
-            Rect(600, 700, 13000, 10),
-            Rect(2370, 300, 10, 120),
+            Obstacle(420, 350, 100, 10),
+            Obstacle(1600, 130, 100, 10),
+            Obstacle(0, 700, 2000, 10),
+            Obstacle(600, 700, 13000, 10),
+            Obstacle(2370, 300, 10, 120),
         ]
     )
 ]

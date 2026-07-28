@@ -1,4 +1,4 @@
-import pygame
+from pygame import Rect
 
 
 class FlyingEnemy:
@@ -9,7 +9,7 @@ class FlyingEnemy:
         self.track = track
         self.player_current_frame = 0
         self.enemy_target_index = 0
-        self.rect = pygame.Rect(start_x, start_y, self.frames[0].get_width(), self.frames[0].get_height())
+        self.rect = Rect(start_x, start_y, self.frames[0].get_width(), self.frames[0].get_height())
         self.speed = 5
 
     def __str__(self):
@@ -33,3 +33,6 @@ class FlyingEnemy:
 
     def next_frame(self):
         self.player_current_frame = (self.player_current_frame + 1) % len(self.frames)
+
+    def draw(self, screen, camera_x):
+        screen.blit(self.get_frame(), (self.rect.x - camera_x, self.rect.y))

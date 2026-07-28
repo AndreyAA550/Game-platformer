@@ -1,4 +1,4 @@
-import pygame
+from pygame import Rect, transform
 
 
 class Player:
@@ -11,7 +11,7 @@ class Player:
         self.animation_speed = animation_speed
         self.player_current_frame = 0
 
-        self.rect = pygame.Rect(start_x, start_y, self.frames[0].get_width(), self.frames[0].get_height())
+        self.rect = Rect(start_x, start_y, self.frames[0].get_width(), self.frames[0].get_height())
         self.max_speed = 5
         self.velocity_x = 0
         self.velocity_y = 0
@@ -105,11 +105,14 @@ class Player:
         if self.is_go_right:
             return self.frames[self.player_current_frame]
         else:
-            return pygame.transform.flip(self.frames[self.player_current_frame], True, False)
-
+            return transform.flip(self.frames[self.player_current_frame], True, False)
 
     def next_frame(self):
         if self.velocity_x and self.on_ground:
             self.player_current_frame = (self.player_current_frame + 1) % len(self.frames)
         else:
             self.player_current_frame = 0
+
+    def draw(self, screen, camera_x):
+        screen.blit(self.get_frame(), (self.rect.x - camera_x, self.rect.y))
+
